@@ -77,19 +77,11 @@ Both evaluated on the log-transformed predictions and then converted back to the
 
 ## 📈 Best Result
 
-Final model: **Ridge Regression**
+Final model: **Tuned Ridge Regression**
 
-- RMSE: 26,165
-- R²: 0.9107
-- Best Alpha: 10
+- RMSE: 0.14429850702816943
+- Best Alpha: 26.366508987303554
 
----
-
-## 📊 Example SHAP Summary Plot
-
-> Visualizing feature importance based on impact on predictions:
-
-![SHAP Summary Plot](images/shap_summary.png)
 
 ---
 
