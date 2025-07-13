@@ -24,26 +24,27 @@ Categorical variables are processed using **OneHotEncoder** to convert categorie
 - `SHAP`
 - `joblib`
 - `scipy`
+- `lightgbm`
 
 ---
 
 ## Workflow
 
-### 1️⃣ Data Cleaning & Preprocessing
+### 1. Data Cleaning & Preprocessing
 
 - Handling missing values:
   - Categorical columns: filled with 'None'
   - Numeric columns: filled with median or 0
 - Log transformation applied to `SalePrice` to reduce skewness and improve model performance.
 
-### 2️⃣ Exploratory Data Analysis (EDA)
+### 2. Exploratory Data Analysis (EDA)
 
 - Distribution plots for target variable (before and after log transform)
 - Scatterplots to check correlation between features and sale price
 - Skewness check to ensure the target is close to normally distributed
 - Log-transform `SalePrice` to fix skewness value
 
-### 3️⃣ Model Building
+### 3. Model Building
 
 Models used:
 - Ridge Regression
@@ -55,12 +56,12 @@ Each model was integrated into a **Pipeline** containing:
 - Preprocessor (for scaling numeric features and encoding categoricals)
 - Regressor (the model)
 
-### 4️⃣ Hyperparameter Tuning
+### 4. Hyperparameter Tuning
 
 - `Ridge Regression` tuned using `GridSearchCV` to find the optimal alpha value.
 - Cross-validation used to assess generalization performance.
 
-### 5️⃣ Model Evaluation
+### 5. Model Evaluation
 
 Metrics:
 - **RMSE (Root Mean Squared Error)**
@@ -68,10 +69,17 @@ Metrics:
 
 Both evaluated on the log-transformed predictions and then converted back to the original scale.
 
-### 6️⃣ Model Interpretation
+### 6. Model Interpretation
 
 - **SHAP Summary Plot** visualizes each feature's impact on model predictions.
 - High SHAP values indicate features that push predictions higher or lower, with color showing whether the feature value was high or low.
+
+### 7. Another model training
+Training model using Light GBM Regression algorithm. The model result:
+- RMSE: 28681.16
+- R2 Train: 0.9882
+- R2 Test: 0.8928
+
 
 ---
 
