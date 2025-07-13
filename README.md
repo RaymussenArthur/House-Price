@@ -80,15 +80,10 @@ Training model using Light GBM Regression algorithm. The model result:
 - R2 Train: 0.9882
 - R2 Test: 0.8928
 
-
----
-
-## 📈 Best Result
-
-Final model: **Tuned Ridge Regression**
-
-- RMSE: 0.14429850702816943
-- Best Alpha: 26.366508987303554
+Tuning model with result:
+- Test RMSE: 29933.29
+- R2 Train: 0.9777
+- R2 Test: 0.8832
 
 
 ---
