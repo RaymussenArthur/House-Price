@@ -1,95 +1,78 @@
-# House Price Prediction
+# Kaggle: House Price Prediction
 
-This project builds a regression model to predict house sale prices from https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/data. The process covers exploratory data analysis (EDA), data preprocessing, model training, and model interpretation using SHAP values.
+This repository contains a complete machine learning project for predicting house sale prices, based on the [Kaggle "House Prices: Advanced Regression Techniques" competition](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/data).
 
----
-
-## Features
-
-- **Numeric Features**: `GrLivArea`, `OverallQual`, `GarageCars`, `1stFlrSF`, `YearBuilt`, etc.
-- **Categorical Features**: `HouseStyle`, `Foundation`, `GarageType`, etc.
-
-Categorical variables are processed using **OneHotEncoder** to convert categories into binary numerical features. Numeric features are scaled using **StandardScaler`.
+The project covers the entire data science workflow:
+* **Data Cleaning & Preprocessing:** Handling missing values and feature engineering.
+* **Exploratory Data Analysis (EDA):** Visualizing distributions and correlations.
+* **Model Training & Tuning:** Building and optimizing multiple regression models.
+* **Model Interpretation:** Using SHAP to understand *why* the model makes its predictions.
 
 ---
 
-## 🛠️ Libraries & Tools
+## Final Model Performance
 
-- `pandas`
-- `numpy`
-- `scikit-learn`
-- `xgboost`
-- `seaborn`
-- `matplotlib`
-- `SHAP`
-- `joblib`
-- `scipy`
-- `lightgbm`
+The best-performing model was a **Tuned LightGBM (LGBM) Regressor**.
+
+| Model | R² Score (Train) | R² Score (Test) | Test RMSE |
+| :--- | :--- | :--- | :--- |
+| **Tuned LightGBM** | 0.9777 | 0.8832 | **$29,933.29** |
+
+*Note: RMSE (Root Mean Squared Error) is in dollars. R² measures the proportion of the variance in the sale price that is predictable from the features.*
 
 ---
 
-## Workflow
+## Tech Stack
+
+* **Data Analysis & Manipulation:** `pandas`, `numpy`, `scipy`
+* **Machine Learning & Modeling:** `scikit-learn` (Ridge, Lasso, RandomForest), `xgboost`, `lightgbm`
+* **Visualization & Interpretation:** `matplotlib`, `seaborn`, `SHAP`
+* **Model Saving:** `joblib`
+
+---
+
+## Project Workflow
 
 ### 1. Data Cleaning & Preprocessing
-
-- Handling missing values:
-  - Categorical columns: filled with 'None'
-  - Numeric columns: filled with median or 0
-- Log transformation applied to `SalePrice` to reduce skewness and improve model performance.
+* **Missing Values:** Categorical `NaN` values were filled with `'None'`, while numeric `NaN` values were imputed using the **median** or `0`.
+* **Target Variable:** The `SalePrice` was **log-transformed** (`np.log1p`) to normalize its distribution, which significantly improves regression model performance.
+* **Feature Scaling:** Numeric features were scaled using `StandardScaler` and categorical features were encoded using `OneHotEncoder`.
 
 ### 2. Exploratory Data Analysis (EDA)
+* **Target Distribution:** Analyzed the skewness of `SalePrice` and confirmed the effectiveness of the log transform.
+* **Feature Correlation:** Used scatterplots and heatmaps to identify key features (like `GrLivArea` and `OverallQual`) that are highly correlated with the sale price.
 
-- Distribution plots for target variable (before and after log transform)
-- Scatterplots to check correlation between features and sale price
-- Skewness check to ensure the target is close to normally distributed
-- Log-transform `SalePrice` to fix skewness value
+### 3. Model Building & Tuning
+Several regression algorithms were trained and evaluated using a `Pipeline` to streamline preprocessing:
+* Ridge Regression (Tuned with `GridSearchCV`)
+* Lasso Regression
+* Random Forest Regressor
+* XGBoost Regressor
+* **LightGBM Regressor (Best Performer)**
 
-### 3. Model Building
+### 4. Model Interpretation
+> **"Why did the model predict this price?"**
 
-Models used:
-- Ridge Regression
-- Lasso Regression
-- Random Forest Regressor
-- XGBoost Regressor
-
-Each model was integrated into a **Pipeline** containing:
-- Preprocessor (for scaling numeric features and encoding categoricals)
-- Regressor (the model)
-
-### 4. Hyperparameter Tuning
-
-- `Ridge Regression` tuned using `GridSearchCV` to find the optimal alpha value.
-- Cross-validation used to assess generalization performance.
-
-### 5. Model Evaluation
-
-Metrics:
-- **RMSE (Root Mean Squared Error)**
-- **R² Score**
-
-Both evaluated on the log-transformed predictions and then converted back to the original scale.
-
-### 6. Model Interpretation
-
-- **SHAP Summary Plot** visualizes each feature's impact on model predictions.
-- High SHAP values indicate features that push predictions higher or lower, with color showing whether the feature value was high or low.
-
-### 7. Another model training
-Training model using Light GBM Regression algorithm. The model result:
-- RMSE: 28681.16
-- R2 Train: 0.9882
-- R2 Test: 0.8928
-
-Tuning model with result:
-- Test RMSE: 29933.29
-- R2 Train: 0.9777
-- R2 Test: 0.8832
-
+To answer this, a **SHAP (SHapley Additive exPlanations)** summary plot was created. This plot visualizes the impact of each feature on the model's output, showing which features are most important and whether high or low values of that feature increase or decrease the predicted price.
 
 ---
 
-## 📎 How to Run
+## How to Run
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/RaymussenArthur/House-Price.git
+1.  **Clone this repository:**
+    ```bash
+    git clone [https://github.com/RaymussenArthur/House-Price.git](https://github.com/RaymussenArthur/House-Price.git)
+    cd House-Price
+    ```
+
+2.  **Install dependencies:**
+    (It's highly recommended to create a `requirements.txt` file from your environment)
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3.  **Launch Jupyter Notebook:**
+    ```bash
+    jupyter notebook
+    ```
+4.  Open the main notebook to see the full analysis and model training process.
